@@ -96,13 +96,14 @@ def native_quantize_if_op_impl(
 
     if is_weight_compression_needed(advanced_parameters):
         compress_quantize_weights_transformation(quantized_model)
-
+    
     dump_parameters(
         quantized_model,
         {
             "preset": preset,
             "target_device": target_device.value,
             "subset_size": subset_size,
+            "actual_subset_size": min(subset_size, calibration_dataset.get_length()),
             "fast_bias_correction": fast_bias_correction,
             "model_type": model_type,
             "ignored_scope": ignored_scope,
